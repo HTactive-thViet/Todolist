@@ -1,77 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="todolist.css">
-</head>
+    <link rel="stylesheet" href="todolist.css" />
+  </head>
 
-
-<body>
+  <body>
     <div class="container">
-        <ul id="todolist" style="list-style-type: none;">
-        </ul>
+      <ul id="todolist" style="list-style-type: none;"></ul>
     </div>
     <script>
-        getDataJSON = async () => {
-            getTodolist = async () => {
-                const getData = await fetch("http://5e5e2557725f320014ed10b3.mockapi.io/lists")
-                const data = await getData.json();
-                const getTask = await fetch("http://5e5e2557725f320014ed10b3.mockapi.io/lists/1/tasks");
-                const dataTask = await getTask.json();
-                const getTask2 = await fetch("http://5e5e2557725f320014ed10b3.mockapi.io/lists/2/tasks");
-                const dataTask2 = await getTask2.json();
-                const getTask3 = await fetch("http://5e5e2557725f320014ed10b3.mockapi.io/lists/3/tasks");
-                const dataTask3 = await getTask3.json();
-                printTodolist = () => {
-                    const print = document.getElementById("todolist")
-                    data.forEach(x => {
-                        const li_tdl = document.createElement("li")
-                        li_tdl.innerHTML = x.name;
-                        print.appendChild(li_tdl);
-                        printTask = () => {
-                            const filterByNameTask = dataTask.filter(task => task.listId === x.id);
-                            const ul1 = document.createElement("ul");
-                            filterByNameTask.forEach(y => {
-                                const li = document.createElement("li");
-                                li .innerHTML = y.title;
-                                ul1.appendChild(li);
-                            });
-                            li_tdl.appendChild(ul1);
-                        }
-                        printTask2 = () => {
-                            const filterByNameTask2 = dataTask2.filter(task => task.listId === x.id);
-                            const ul2 = document.createElement("ul");
-                            filterByNameTask2.forEach(y => {
-                                const li = document.createElement("li");
-                                li.innerHTML = y.title;
-                                ul2.appendChild(li);
-                            })
-                            li_tdl.appendChild(ul2);
-                        }
-                        printTask3 = () => {
-                            const filterByNameTask3 = dataTask3.filter(task => task.listId === x.id);
-                            const ul3 = document.createElement("ul");
-                            filterByNameTask3.forEach(z => {
-                                const li = document.createElement("li");
-                                li.innerHTML = z.title;
-                                ul3.appendChild(li);
-                            })
-                            li_tdl.appendChild(ul3);
-                        }
-                        printTask();
-                        printTask2();
-                        printTask3();
-                    });
-                }
-                printTodolist();
-            }
-            getTodolist();
-        }
-        getDataJSON(); 
-    </script>
-</body>
+      getDataJSON = async () => {
+        getTodolist = async () => {
+          const getData = await fetch(
+            "http://5e5e2557725f320014ed10b3.mockapi.io/lists"
+          );
+          const data = await getData.json();
+          const getTask = await fetch(
+            "http://5e5e2557725f320014ed10b3.mockapi.io/lists/1/tasks"
+          );
+          const dataTask = await getTask.json();
+          const sortedDataTask = dataTask.sort((a,b)=>{
+              return a.order - b.order;
+          })
+          const getTask2 = await fetch(
+            "http://5e5e2557725f320014ed10b3.mockapi.io/lists/2/tasks"
+          );
+          const dataTask2 = await getTask2.json();
+          const sortedDataTask2 = dataTask2.sort((a,b)=>{
+              return a.order - b.order;
+          })
+          const getTask3 = await fetch(
+            "http://5e5e2557725f320014ed10b3.mockapi.io/lists/3/tasks"
+          );
+          const dataTask3 = await getTask3.json();
+          const sortedDataTask3 = dataTask3.sort((a,b)=>{
+              return a.order - b.order;
+          })
+          printTodolist = () => {
+            const print = document.getElementById("todolist");
+            data.forEach(x => {
+              const li_tdl = document.createElement("li");
+              li_tdl.innerHTML = x.name;
+              print.appendChild(li_tdl);
+                
+              const filterByNameTask = sortedDataTask.filter(
+                task => task.listId === x.id
+              );
+              const ul = document.createElement("ul");
+              filterByNameTask.forEach(y => {
+                const li1 = document.createElement("li");
+                li1.innerHTML = y.title;
+                ul.appendChild(li1);
+              });
+              li_tdl.appendChild(ul);
+              
+              console.log(filterByNameTask);
+              const filterByNameTask2 = sortedDataTask2.filter(
+                task => task.listId === x.id
+              );
+              filterByNameTask2.forEach(y => {
+                const li2 = document.createElement("li");
+                li2.innerHTML = y.title;
+                ul.appendChild(li2);
+              });
+              li_tdl.appendChild(ul);
+              const filterByNameTask3 = sortedDataTask3.filter(
+                task => task.listId === x.id
+              );
 
+              filterByNameTask3.forEach(z => {
+                const li3 = document.createElement("li");
+                li3.innerHTML = z.title;
+                ul.appendChild(li3);
+              });
+              li_tdl.appendChild(ul);
+            });
+          };
+          printTodolist();
+        };
+        getTodolist();
+      };
+      getDataJSON();
+    </script>
+  </body>
 </html>
