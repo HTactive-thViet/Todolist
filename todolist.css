@@ -1,0 +1,32 @@
+body{
+    background-image: url("img/Leonardo-Background-Fullhd-LIMEART-VJ-Loop_006.jpg");
+}
+.container{
+    width: 100%;
+    background-color:darkgreen;
+    justify-content: center;
+    display: flex;
+
+}
+.container ul#todolist {
+    margin: auto;
+    width: 100%;
+    background-color: cyan;
+    text-align: center;
+}
+.container > ul#todolist > li{
+    width: 33%;
+    float: left;
+    text-align: center;
+    border: black solid 1px;
+
+}
+ul#todolist > li > ul {
+
+    list-style-type: none;
+    border: black solid 1px 0px;
+}
+ul#todolist > li > ul >li {
+    width: 100%;
+    text-align: center;
+}
